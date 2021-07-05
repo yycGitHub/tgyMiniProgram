@@ -1,0 +1,10 @@
+/**index.wxss**/
+.whole-page {
+  height:100%;
+  width: 100%;
+}
+
+.map-page {
+  height:100%;
+  width: 100%;
+}

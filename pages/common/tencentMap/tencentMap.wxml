@@ -1,0 +1,17 @@
+<!--pages/common/tencentMap/tencentMap.wxml-->
+<view class='whole-page'>
+  <view class='map-page'>
+      <map 
+        class="map"
+        style="width: 100%; height: 100vh;"
+        subkey="{{key}}"
+        longitude="{{longitude}}"
+        latitude="{{latitude}}" 
+        enable-poi="true"
+        scale="14"
+        layer-style="1"
+        show-location
+      ></map>
+  </view>
+  
+</view>

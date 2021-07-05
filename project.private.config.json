@@ -1,0 +1,26 @@
+{
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/common/tencentMap/tencentMap",
+          "pathName": "pages/common/tencentMap/tencentMap",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+  
+
+  
+}
