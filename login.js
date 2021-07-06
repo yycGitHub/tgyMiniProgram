@@ -17,8 +17,10 @@ var userWxInfo = {
 function miniProgramLogin(loginPage){
   wx.checkSession({
     success () {
-      console.log('已登录！');
-      getUserInfoByDataBase();
+      console.log('已登录！OpenID:'+wx.getStorageSync('openid')+";session_key:"+wx.getStorageSync('key'));
+      userWxInfo.openid = wx.getStorageSync('openid');
+      userWxInfo.unionid = wx.getStorageSync('unionid');
+      userWxInfo.sessionkey = wx.getStorageSync('key');
     },
     fail () {
       console.log('登录过期！')
@@ -44,8 +46,13 @@ function loginMethod (loginPage) {
             code: res.code
           },
           success (ownRes) {
-            console.log("返回json:"+ownRes.data.result)
-            miniProgramGetUser(JSON.parse(ownRes.data.result),loginPage);
+            console.log("返回json:"+ownRes.data.result);
+            var code = JSON.parse(ownRes.data.result);
+            console.log("返回json_sessionkey:"+code.session_key);
+            wx.setStorageSync('key', code.session_key);
+            wx.setStorageSync('openid', code.openid);
+            wx.setStorageSync('unionid', code.unionid);
+            miniProgramGetUser(code,loginPage);
             return '200';
           }
         });
@@ -63,7 +70,7 @@ function loginMethod (loginPage) {
 }
 
 //获取用户信息并保存
-function miniProgramGetUser(userParam,loginPage){
+function miniProgramGetUser(code,loginPage){
   wx.showModal({
     title: '温馨提示',
     content: '正在请求您的个人信息',
@@ -75,9 +82,9 @@ function miniProgramGetUser(userParam,loginPage){
           let userInfo = userRes.userInfo;
           console.log("获取用户信息JSON:"+JSON.stringify(userInfo));
           //保存微信用户信息
-          userWxInfo.openid = userParam.openid;
-          userWxInfo.unionid = userParam.unionid;
-          userWxInfo.sessionkey = userParam.session_key;
+          userWxInfo.openid = code.openid;
+          userWxInfo.unionid = code.unionid;
+          userWxInfo.sessionkey = code.session_key;
           userWxInfo.nickname = userInfo.nickName;
           userWxInfo.avatarurl = userInfo.avatarUrl;
           userWxInfo.gender = userInfo.gender;
@@ -121,11 +128,5 @@ function miniProgramGetUser(userParam,loginPage){
 
 //查询登录用户信息
 function getUserInfoByDataBase(){
-  wx.getUserInfo({
-    //desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-    success: (res) => {
-      let userInfo = res.userInfo;
-      console.log("保存成功JSON:"+JSON.stringify(userInfo));
-    }
-  })
+  
 }

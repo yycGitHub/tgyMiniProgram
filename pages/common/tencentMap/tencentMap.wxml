@@ -7,6 +7,8 @@
         subkey="{{key}}"
         longitude="{{longitude}}"
         latitude="{{latitude}}" 
+        polyline="{{polyline}}"
+        markers="{{markers}}"
         enable-poi="true"
         scale="14"
         layer-style="1"
