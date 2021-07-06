@@ -43,7 +43,7 @@ function connectSocketMethod(){
         if (newData.navigationType==1) {
           //getLocalGps();
           wx.navigateTo({
-            path: 'pages/common/tencentMap/tencentMap.wxml?routePlanData='+newData,
+            path: 'pages/common/tencentMap/tencentMap?routePlanData='+newData,
             success(res) {
               console.log("socketMessage:"+JSON.stringify(res));
             }
