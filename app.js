@@ -1,8 +1,8 @@
 // app.js
 var loginJs = require('login.js');
 var isConnectWebSocket = false;
-var latitudegd = null;
-var longitudegd =null;
+var latitudegd = "28.14715";
+var longitudegd = "113.0634";
 App({
   
   onLaunch() {
@@ -37,20 +37,15 @@ function connectSocketMethod(){
   if (isConnectWebSocket) {
     SocketTask.onOpen(()=>{
       SocketTask.onMessage(function(data){
-        console.log("socketMessage:"+JSON.stringify(data));
         //如果是命令类型为导航则跳转
-        if (data.orderType==1) {
-          getLocalGps();
-          wx.navigateToMiniProgram({
-            appId: 'wx80bd94c9983c7717',
-            path: 'pages/common/tencentMap/tencentMap.wxml',
-            extraData: {
-              routePlanData: data,
-              latitudegd:latitudegd,
-              longitudegd:longitudegd
-            },
+        console.log("socketMessage:"+JSON.stringify(data));
+        var newData = JSON.parse(data.data);
+        if (newData.navigationType==1) {
+          //getLocalGps();
+          wx.navigateTo({
+            path: 'pages/common/tencentMap/tencentMap.wxml?routePlanData='+newData,
             success(res) {
-              // 打开成功
+              console.log("socketMessage:"+JSON.stringify(res));
             }
           })
         }
